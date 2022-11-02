@@ -1,32 +1,24 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+  <div>
+    <Header></Header>
+    <router-view></router-view>
+    <Footer v-show="$route.meta.ishowfooter"></Footer>
   </div>
 </template>
 
-<style lang="less">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+<script>
+import Header from '@/components/Header/Header.vue'
+import Footer from '@/components/Footer/Footer.vue'
+export default {
+  components: {
+    Header,
+    Footer
+  },
+  mounted() {
+    // 派发action 获取商品分类三级列表，只执行一次，优化性能 放在typenav组件的话执行多次，发起多次请求
+    this.$store.dispatch('categoryList')
   }
 }
-</style>
+</script>
+
+<style lang="less" scoped></style>
